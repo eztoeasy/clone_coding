@@ -22,7 +22,7 @@ let db = [];
 
 fs.readdirSync(__dirname)
     .filter(file => {
-        return file.indexOf('.js')&& file !== 'index.js'
+        return file.indexOf('.js') && file !== 'index.js'
     })
     .forEach(file => {
         let model = sequelize.import(path.join(__dirname,
