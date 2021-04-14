@@ -2,11 +2,17 @@
 {% extends "layout/base.html" %}
 
 {% block content -%}
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         <table class="table table-bordered">
             <tr>
               <th>이름</th>
-              <td><input type="text" name="name" class="form-control" value="{{ shop.name }}"  placeholder="패캠 파스타"/></td>
+              <td><input type="text" name="name" class="form-control" value="{{ shop.name }}"/></td>
+            </tr>
+            <tr>
+              <th>섬네일</th>
+              <td>
+                <input type="file" name="thumbnail"/>
+              </td>
             </tr>
             <tr>
               <th>주소</th>
@@ -14,11 +20,11 @@
             </tr>
             <tr>
               <th>상세주소</th>
-              <td><input type="text" name="location" class="form-control" value="{{ shop.location }}" placeholder="101동 101호"/></td>
+              <td><input type="text" name="location" class="form-control" value="{{ shop.location }}"/></td>
             </tr>
             <tr>
               <th>전화번호</th>
-              <td><input type="text" name="phone" class="form-control" value="{{ shop.phone }}" placeholder="02-543-2121"/></td>
+              <td><input type="text" name="phone" class="form-control" value="{{ shop.phone }}"/></td>
             </tr>
             <tr>
               <th>운영시간</th>
@@ -26,7 +32,7 @@
             </tr>
             <tr>
               <th>핸드폰번호</th>
-              <td><input type="text" name="cell_phone" class="form-control" value="{{ shop.cell_phone }}" placeholder="010-3333-3333" /></td>
+              <td><input type="text" name="cell_phone" class="form-control" value="{{ shop.cell_phone }}"/></td>
             </tr>
         </table>
         <button class="btn btn-primary">작성하기</button>
