@@ -13,8 +13,8 @@ exports.get_shops = async ( _ , res ) => {
 
 }
 
-exports.get_shops_write = ( _ , res ) => {
-  res.render( 'admin/form.html' );
+exports.get_shops_write = ( req , res ) => {
+  res.render( 'admin/form.html', { csrfToken : req.csrfToken() } );
 }
 
 exports.post_shops_write = async (req,res) => {
@@ -55,7 +55,7 @@ exports.get_shops_edit = async(req, res) => {
     try{
 
         const shop = await models.Shops.findByPk(req.params.id);
-        res.render('admin/form.html', { shop });  
+        res.render('admin/form.html', { shop, csrfToken : req.csrfToken() });  
 
     }catch(e){
 
