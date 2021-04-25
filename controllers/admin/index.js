@@ -1,13 +1,14 @@
 const { Router } = require('express');
 const router = Router();
 const ctrl = require('./admin.ctrl');
-
 const cssrfProtection = require('../../middleware/csrf');
-
 const upload = require('../../middleware/multer');
+const loginRequired = require('../../middleware/loginRequired');
 
 
 router.get('/shops', ctrl.get_shops );
+
+// router.use(loginRequired);
 
 router.get('/shops/write', cssrfProtection, ctrl.get_shops_write );
 

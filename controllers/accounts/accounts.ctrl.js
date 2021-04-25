@@ -18,8 +18,8 @@ exports.get_login = function(req, res){
 }
 
 exports.post_login = function(_, res){
-    res.send('<script>alert("로그인 성공");\
-    location.href = "/accounts/success";</script>');
+    res.send('<script>alert("로그인 성공입니다.");\
+    location.href = "/";</script>');
 }
 
 exports.get_success = function(req, res){
