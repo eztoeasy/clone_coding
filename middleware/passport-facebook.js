@@ -20,7 +20,6 @@ passport.use(new FacebookStrategy({
         // console.log(profile._json);
 
         try {
-
             const username = `fb_${profile.id}`;
             const exist = await models.User.count({
                 where : {

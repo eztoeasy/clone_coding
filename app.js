@@ -86,15 +86,23 @@ class App {
     }
 
     setSession(){
+
+        const SequelizeStore = require('connect-session-sequelize')(session.Store);
+
         // session 관련 셋팅
-        this.app.use(session({
-            secret : 'eztoeasy',
-            resave : false,
-            saveUninitialized : true,
+        this.app.sessionMiddleWare = session({
+            secret: 'eztoeasy',
+            resave: false,
+            saveUninitialized: true,
             cookie: {
-                maxAge : 2000 * 60 * 60
-            }
-        }));
+                maxAge: 2000 * 60 * 60
+            },
+            store : new SequelizeStore({
+                db : db.sequelize
+            })
+        });
+
+        this.app.use(this.app.sessionMiddleWare);
 
         // passport 적용
         this.app.use(passport.initialize());
