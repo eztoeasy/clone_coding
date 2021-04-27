@@ -110,18 +110,25 @@
     </section>
 </main>
 
-<!-- cart -->
-<!-- 쓸때는 hidden 클래스를 제거하세요. -->
-<a href="http://" class="btn-cart" >
+<a class="btn-cart" >
   <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-  <i class="cart-item-counter">0</i>
+  <i class="cart-item-counter">{{ cartLength }}</i>
 </a>
 
 <script>
 $(document).ready(function(){
+
+    $('.btn-cart').click(function(){
+        var cartCounter = parseInt($('.cart-item-counter').text());
+        if (!cartCounter){
+            alert('장바구니에 담긴 메뉴가 없습니다.');
+        } else {
+            location.href = "/cart";
+        }
+    });
+
     $('.getCart').click(function(event){
         event.preventDefault();
-        {# alert('장바구니 담기 확인'); #}
         if (confirm('장바구니에 담겠습니까?')){
             
             var shop_id = {{ shop.id }};
@@ -138,10 +145,14 @@ $(document).ready(function(){
             cartList[menu_id] = {
                 shop_id,
                 menu_id,
+                name,
                 price
             };
 
             setCookieHour('cartList', JSON.stringify(cartList), 3);
+
+            $('.cart-item-counter').text(Object.keys(cartList).length);
+
             alert('성공적으로 장바구니에 담았습니다.');
         }
     });

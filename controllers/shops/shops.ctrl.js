@@ -6,5 +6,13 @@ exports.get_shops_detail = async function(req, res){
         include : ['Menu']
     });
 
-    res.render('shops/detail.html', { shop });
+    let cartList = {};
+    let cartLength = 0;
+
+    if (typeof (req.cookies.cartList) !== 'undefined') {
+        cartList = JSON.parse(unescape(req.cookies.cartList));
+        cartLength = Object.keys(cartList).length;
+    }
+
+    res.render('shops/detail.html', { shop, cartLength });
 }
