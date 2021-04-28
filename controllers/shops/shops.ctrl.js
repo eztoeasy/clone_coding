@@ -8,11 +8,18 @@ exports.get_shops_detail = async function(req, res){
 
     let cartList = {};
     let cartLength = 0;
+    let sameShops = true;
 
     if (typeof (req.cookies.cartList) !== 'undefined') {
         cartList = JSON.parse(unescape(req.cookies.cartList));
         cartLength = Object.keys(cartList).length;
+
+        for (let key in cartList){
+            if (cartList[key].shop_id !== parseInt(req.params.id)){
+                sameShops = false;
+            }
+        }
     }
 
-    res.render('shops/detail.html', { shop, cartLength });
+    res.render('shops/detail.html', { shop, cartLength, sameShops });
 }
