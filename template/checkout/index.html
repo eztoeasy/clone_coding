@@ -27,8 +27,8 @@
     </div>
 
     <form action="" id="orderForm">
-        <input type="hidden" name="shop_id" value="{{ shop_id }}">
         <input type="hidden" name="menuArray" value="{{ menuArray | dump }}">
+        <input type="hidden" name="shop_id" value="{{ shop_id }}">
         <h3 class="text-center">배송지정보</h3>
         <table class="table table-bordered table-hover" style="max-width:500px; margin:0 auto;">
             <tbody>
@@ -85,8 +85,7 @@ $(document).ready(function(){
        var menuArray = $('input[name=menuArray]').val();
 
        var IMP = window.IMP;
-       IMP.init('가맹점식별코드삽입');
-       //아임호트 사이트에서 받아온다( http://www.iamport.kr/ )
+       IMP.init('imp50114121');
 
        IMP.request_pay({
            pg : 'inicis',
