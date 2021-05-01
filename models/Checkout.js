@@ -18,7 +18,7 @@ module.exports = function(sequelize, DataTypes){
             buyer_postcode : { type: DataTypes.STRING }, //우편번호
 
             status : { type: DataTypes.STRING }, //결재완료, 배송중 등등
-
+ 
         },{
             tableName: 'Checkout'
         }
