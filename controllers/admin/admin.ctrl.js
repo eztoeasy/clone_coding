@@ -17,14 +17,25 @@ exports.get_shops_write = ( req , res ) => {
   res.render( 'admin/form.html', { csrfToken : req.csrfToken() } );
 }
 
-exports.post_shops_write = async (req,res) => {
+exports.post_shops_write = async (req, res) => {
 
-    try{
+    try {
+        // 위도 경도 저장
+        req.body.geo = {
+            type: 'Point',
+            coordinates: [
+                // 경도
+                req.body.geo.split(',')[0],
+                // 위도
+                req.body.geo.split(',')[1]
+            ]
+        };
+
         req.body.thumbnail = req.file ? req.file.filename : '';
-		await models.Shops.create(req.body);
+        await models.Shops.create(req.body);
         res.redirect('/admin/shops');
 
-    }catch(e){
+    } catch (e) {
         console.log(e);
     }
 };
@@ -70,8 +81,18 @@ exports.post_shops_edit = async(req, res) => {
     const path = require('path');
     const uploadDir = path.join(__dirname, '../../uploads');
 
-    try{
-
+    try {
+        // 위도 경도 저장
+        req.body.geo = {
+            type: 'Point',
+            coordinates: [
+                // 경도
+                req.body.geo.split(',')[0],
+                // 위도
+                req.body.geo.split(',')[1]
+            ]
+        };
+        
         const shop = await models.Shops.findByPk(req.params.id);
         if (req.file && shop.thumbnail){
             fs.unlinkSync(uploadDir + '/' + shop.thumbnail);

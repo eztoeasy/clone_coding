@@ -15,10 +15,17 @@
                 <input type="file" name="thumbnail"/>
               </td>
             </tr>
-            <tr>
-              <th>주소</th>
-              <td><input type="text" name="address" class="form-control" value="{{ shop.address }}"/></td>
-            </tr>
+            <th>주소</th>
+              <td>
+                <div class="form-inline">
+                  <input type="hidden" name="geo" value="{{ shop.geo.coordinates[0] }}, {{ shop.geo.coordinates[1] }}">
+                  <input type="text" name="address" class="form-control" value="{{ shop.address }}"/>
+                  <a class="btn btn-primary btn-sm btn_select" id="map_search" style="display: inline-block; ">
+                      주소 검색
+                  </a>
+                </div>
+                <div id="map_area" style="width:100%;height:350px; margin:10px 0 50px 0; visibility:hidden;"></div>
+              </td>
             <tr>
               <th>상세주소</th>
               <td><input type="text" name="location" class="form-control" value="{{ shop.location }}"/></td>
@@ -38,4 +45,52 @@
         </table>
         <button class="btn btn-primary">작성하기</button>
     </form>
+
+    <script src = "/static/js/kakaomap.js">
+    </script>
+
+    <script>
+    var mapContainer = new kakao.maps.Map(
+      document.getElementById('map_area'), {
+        center : new kakao.maps.LatLng( {{ map_api.default.lat }}, {{ map_api.default.lng }}),
+        level : 3
+      }
+    );
+
+    {% if shop.address and shop.geo %}
+      mapSearchByAddress(
+        mapContainer, 
+        '#map_area',
+        'input[name=geo]',
+        $('input[name=name]'),
+        $('input[name=address]')
+      );
+    {% endif %}
+
+    $('#map_search').click(function(){
+      var $name = $('input[name=name]');
+      var $address = $('input[name=address]');
+
+      if (!$name.val()){
+        alert("상점명을 입력하세요.");
+        return false;
+      }
+
+      if (!$address.val()){
+        alert("주소를 입력하세요.");
+        return false;
+      }
+
+      $('#map_area').css('height', '350px');
+
+      mapSearchByAddress(
+        mapContainer, 
+        '#map_area',
+        'input[name=geo]',
+        $name,
+        $address
+      );
+    });
+
+    </script>
 {% endblock %}
