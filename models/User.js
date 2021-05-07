@@ -19,6 +19,19 @@ module.exports = function(sequelize, DataTypes){
         tableName : 'User'
     });
 
+    User.associate = function(models){
+        User.belongsToMany(models.Shops, {
+            through : {
+                model : 'LikesShops',
+                unique : false
+            },
+            as : 'Likes',
+            foreignKey : 'user_id',
+            sourceKey : 'id',
+            constraints : false
+        });
+    }
+
     User.beforeCreate(function(user, _) {
         user.password = passwordHash(user.password);
     });

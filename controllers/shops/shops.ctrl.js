@@ -3,8 +3,16 @@ const models = require('../../models');
 exports.get_shops_detail = async function(req, res){
     const shop = await models.Shops.findOne({
         where : { id : req.params.id },
-        include : ['Menu']
+        include : ['Menu', 'LikeUser' ]
     });
+
+    let active = false;
+    if (req.isAuthenticated()){
+        const user = await models.User.findByPk(req.user.id);
+        active = await shop.hasLikeUser(user);
+    }
+
+    const countLike = await shop.countLikeUser();
 
     let cartList = {};
     let cartLength = 0;
@@ -21,5 +29,43 @@ exports.get_shops_detail = async function(req, res){
         }
     }
 
-    res.render('shops/detail.html', { shop, cartLength, sameShops });
+    res.render('shops/detail.html', { shop, countLike, active, cartLength, sameShops });
+}
+
+exports.post_shops_like = async function(req, res){
+
+    try{
+
+        const shop = await models.Shops.findByPk(req.params.shop_id);
+        const user = await models.User.findByPk(req.user.id);
+        const status = await shop.addLikeUser(user);
+
+        res.json({
+            status
+        });
+        //await user.addLikes(shop);
+        
+    } catch (e) {
+        console.log(e);
+    }
+
+}
+
+exports.delete_shops_like = async function(req, res){
+
+    try{
+        
+        const shop = await models.Shops.findByPk(req.params.shop_id);
+        const user = await models.User.findByPk(req.user.id);
+
+        await shop.removeLikeUser(user);
+
+        res.json({
+            message : 'success'
+        });
+
+    } catch (e) {
+        console.log(e);
+    }
+
 }

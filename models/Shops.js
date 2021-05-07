@@ -29,6 +29,17 @@ module.exports = (sequelize, DataTypes) => {
             sourceKey : 'id',
             onDelete : 'CASCADE'
         });
+
+        Shops.belongsToMany(models.User, {
+            through : {
+                model : 'LikesShops',
+                unique : false
+            },
+            as : 'LikeUser',
+            foreignKey : 'shop_id',
+            sourceKey : 'id',
+            constraints : false
+        });
     }
 
     Shops.prototype.dateFormat = (date) => (
