@@ -189,13 +189,32 @@ exports.get_order_edit = async function(req, res){
             where : {
                 id : req.params.id
             },
-            include : ['Menu', 'Shop']
+            include : ['Menu', 'Shop', 'User']
         });
 
         res.render('admin/order_edit.html', { checkout });
 
     } catch (e) {
 
+    }
+
+}
+
+exports.post_order_edit = async (req, res) => {
+
+    try{
+        await models.Checkout.update(
+            req.body,
+            {
+                where: {
+                    id: req.params.id
+                }
+            }
+        );
+
+        res.redirect('/admin/order');
+    } catch (e){
+        
     }
 
 }

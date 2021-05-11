@@ -72,8 +72,24 @@
       </section>
     </main>
 
+    <!-- delivery check -->
+    <div class="container delivery-check" hidden>
+      <div class="row">
+        <div class="col-xs-12 sub-title1">
+          주문하신 음식이 이동중입니다.
+        </div>
+      </div>
+    </div>
+
+<script src="/socket.io/socket.io.js"></script>
 <script src="/static/js/kakaomap.js"></script>
 <script>
+
+  var socket = io();
+  socket.on('server order', function(){
+    $('.delivery-check').removeAttr('hidden');
+  });
+
   var shops = {{ shops | dump | safe }};
   window._userGeo = {
     lat : {{ map_api.default.lat }},
