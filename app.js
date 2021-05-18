@@ -15,6 +15,7 @@ const db = require('./models');
 
 
 class App {
+    
 
     constructor () {
         this.app = express();

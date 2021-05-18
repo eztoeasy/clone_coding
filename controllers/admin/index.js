@@ -36,4 +36,8 @@ router.get('/order', ctrl.get_order);
 router.get('/order/edit/:id', ctrl.get_order_edit);
 router.post('/order/edit/:id', ctrl.post_order_edit);
 
+// 태그관련
+router.post('/tag', ctrl.write_tag);
+router.delete('/tag/:shop_id/:tag_id', ctrl.delete_tag);
+
 module.exports = router;
